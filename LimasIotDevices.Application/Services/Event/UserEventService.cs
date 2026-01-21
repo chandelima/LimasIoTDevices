@@ -19,11 +19,11 @@ public class UserEventService : IUserEventService
         response.Headers.Append("Cache-Control", "no-cache");
         response.Headers.Append("Connection", "keep-alive");
 
-        Func<object, Task> onMessage = async (object message) =>
+        Func<EventResponse, Task> onMessage = async (EventResponse message) =>
         {
             try
             {
-                var json = message.ConvertToJson();
+                var json = message.Data.ConvertToJson();
 
                 string? eventType = null;
 
