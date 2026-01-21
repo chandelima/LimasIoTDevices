@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="LimasIotDevices.API/LimasIoTDevices.API.csproj" />
+  <Project Path="LimasIotDevices.Application/LimasIotDevices.Application.csproj" Id="d08c457e-609f-428a-b037-c3201cb6a1ba" />
+  <Project Path="LimasIotDevices.Domain/LimasIotDevices.Domain.csproj" Id="27dc43bd-2e19-4bcb-91f1-4e855aaba865" />
+  <Project Path="LimasIoTDevices.Facade/LimasIoTDevices.Facade.csproj" Id="8a0c238c-a5ff-482a-9efc-253954ebb9c7" />
+  <Project Path="LimasIotDevices.Infrastructure/LimasIotDevices.Infrastructure.csproj" Id="b0437e04-87e5-4b55-bb9a-98af3a41b630" />
+  <Project Path="LimasIoTDevices.Shared/LimasIoTDevices.Shared.csproj" Id="fa239583-9a53-4231-84a6-019b28beb97a" />
+</Solution>

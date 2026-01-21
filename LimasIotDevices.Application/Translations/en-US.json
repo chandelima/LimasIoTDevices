@@ -1,0 +1,31 @@
+{
+  "device": {
+    "validation": {
+      "attributeAtLeastOneRequired": "At least one attribute must be provided.",
+      "descriptionMaxLength": "\"Description\" must not exceed 500 characters.",
+      "keyAlreadyRegistered": "A device with the key \"{0}\" is already registered.",
+      "keyRequired": "\"Key\" is required.",
+      "keyMaxLength": "\"Key\" must not exceed 255 characters.",
+      "nameAlreadyRegistered": "A device with the name \"{0}\" is already registered.",
+      "nameRequired": "\"Name\" is required.",
+      "nameMaxLength": "\"Name\" must not exceed 255 characters.",
+      "stateAttributeRequired": "The device must have \"{0}\" attribute.",
+      "homeAssistantDeviceNotFound": "Device \"{0}\" does not exist in HomeAssistant."
+    }
+  },
+  "deviceAttribute": {
+    "validation": {
+      "descriptionMaxLength": "Attribute {0} \"Description\" must not exceed 500 characters.",
+      "entityAtLeastOneRequired": "Attribute {0} - At least one entity must be provided.",
+      "entityRequired": "Attribute {0} - At least one entity must be provided.",
+      "entityNameRequired": "Attribute {0} - Entity name(s) must be provided.",
+      "entityNameMaxLength": "Attribute {0} - Entity name(s) must not exceed 255 characters.",
+      "keyDuplicated": "Attribute Key \"{0}\" is duplicated.",
+      "keyMaxLength": "Attribute {0} \"Key\" must not exceed 255 characters.",
+      "keyRequired": "Attribute {0} \"Key\" is required.",
+      "nameDuplicated": "Name Key \"{0}\" is duplicated.",
+      "nameMaxLength": "Attribute {0} \"Name\" must not exceed 255 characters.",
+      "nameRequired": "Attribute {0} \"Name\" is required."
+    }
+  }
+}
