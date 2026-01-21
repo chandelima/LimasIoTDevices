@@ -17,7 +17,7 @@ Lima's IoT Devices API is designed to simplify the interaction with Home Assista
 - **Device Management**: Create, read, update, and delete virtual devices that represent Home Assistant entities
 - **Device Attributes**: Manage multiple attributes per device, each mapped to Home Assistant entities
 - **Service Calls**: Execute Home Assistant services through simplified API endpoints
-- **Real-time Updates**: WebSocket integration with Home Assistant for live state updates using SSE
+- **Real-time Updates**: WebSocket integration with Home Assistant for live state updates
 - **Event System**: Track and query device state change events
 - **Localization Support**: Multi-language error messages and validation
 - **Resilience**: Built-in HTTP resilience with Polly for reliable external communications
@@ -157,7 +157,7 @@ The API will be available at:
 #### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/chandelima/LimasIoTDevices.git
 cd LimasIoTDevices
 ```
 
@@ -180,7 +180,7 @@ Update `appsettings.json` or use User Secrets:
 #### Using User Secrets (Recommended for Development)
 
 ```bash
-cd LimasIotDevices.API
+cd LimasIoTDevices.API
 dotnet user-secrets set "ConnectionStrings:LimasIotDevices" "Host=localhost;Database=limasiot;Username=your_user;Password=your_password"
 dotnet user-secrets set "HomeAssistantData:HostUrl" "http://your-homeassistant-instance:8123"
 dotnet user-secrets set "HomeAssistantData:Token" "your-long-lived-access-token"
@@ -194,7 +194,7 @@ Ensure PostgreSQL is running and create the database. Migrations will be applied
 #### 4. Run the Application
 
 ```bash
-cd LimasIotDevices.API
+cd LimasIoTDevices.API
 dotnet run
 ```
 
@@ -339,7 +339,7 @@ Virtual devices that represent one or more Home Assistant entities. Each device 
 
 ### Attributes
 Represent specific properties or controls of a device:
-- **Key**: Unique identifier within the device (required attribute: "state")
+- **Key**: Unique identifier within the device (required attribute: "main")
 - **Name**: Display name
 - **Entities**: List of Home Assistant entity IDs that this attribute controls
 
@@ -354,6 +354,7 @@ Execute Home Assistant services on device entities:
 - **.NET 10**: Latest .NET framework
 - **ASP.NET Core**: Web API framework
 - **Entity Framework Core 10**: ORM for database access
+- **FluentMigrator**: Database migration framework
 - **PostgreSQL**: Relational database
 - **Npgsql**: PostgreSQL provider for EF Core
 - **Swashbuckle**: API documentation (Swagger/OpenAPI)
@@ -392,7 +393,7 @@ Execute Home Assistant services on device entities:
 - Use case interfaces
 - Service contracts
 
-### LimasIoTDevices.Shared
+### LimasIotDevices.Shared
 - Exception handling middleware
 - Extension methods
 - Common utilities
