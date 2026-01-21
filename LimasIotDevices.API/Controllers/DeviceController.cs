@@ -11,6 +11,24 @@ namespace LimasIoTDevices.API.Controllers;
 [Route("api/v1/devices")]
 public class DeviceController : ControllerBase
 {
+    [HttpGet("states")]
+    public async Task<ActionResult<DefaultControllerResponse<List<GetDeviceStateResponse>>>> GetState(
+        [FromServices] IGetDevicesStatesUseCase useCase)
+    {
+        var result = await useCase.Execute();
+        return this.GetResponse(result, useCase);
+    }
+
+    [HttpGet("{deviceKey:required}/state/{attributeKey?}")]
+    public async Task<ActionResult<DefaultControllerResponse<GetDeviceStateResponse>>> GetDeviceState(
+        [FromRoute] string deviceKey,
+        [FromRoute] string? attributeKey,
+        [FromServices] IGetDevicesStateUseCase useCase)
+    {
+        var result = await useCase.Execute(deviceKey, attributeKey);
+        return this.GetResponse(result, useCase);
+    }
+
     [HttpGet("search")]
     public async Task<ActionResult<DefaultControllerResponse<List<GetDeviceResponse>>>> Search(
     [FromQuery] string? searchTerm,

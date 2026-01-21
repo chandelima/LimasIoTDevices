@@ -19,22 +19,22 @@ internal class HomeAssistantGateway : IHomeAssistantGateway
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<IEnumerable<(string EntityId, string State, TimeSpan Duration)>> GetAllDevicesStatesWithDuration()
+    public async Task<List<(string EntityId, string State, TimeSpan CurrentStateDuration)>> GetAllDevicesStatesWithDuration()
     {
         var response = await _httpClient.GetAsync("/api/states");
 
         if (!response.IsSuccessStatusCode)
-            return Enumerable.Empty<(string, string, TimeSpan)>();
+            return new List<(string, string, TimeSpan)>();
 
         var json = await response.Content.ReadAsStringAsync();
 
-        var results = new List<(string EntityId, string State, TimeSpan Duration)>();
+        var results = new List<(string EntityId, string State, TimeSpan CurrentStateDuration)>();
 
         using var doc = JsonDocument.Parse(json);
         var root = doc.RootElement;
 
         if (root.ValueKind != JsonValueKind.Array)
-            return Enumerable.Empty<(string, string, TimeSpan)>();
+            return new List<(string, string, TimeSpan)>();
 
         foreach (var entity in root.EnumerateArray())
         {
@@ -64,7 +64,7 @@ internal class HomeAssistantGateway : IHomeAssistantGateway
     }
 
 
-    public async Task<(string EntityId, string State, TimeSpan Duration)?> GetDeviceStateWithDuration(string entityId)
+    public async Task<(string EntityId, string State, TimeSpan CurrentStateDuration)?> GetDeviceStateWithDuration(string entityId)
     {
         var response = await _httpClient.GetAsync($"/api/states/{entityId}");
 
