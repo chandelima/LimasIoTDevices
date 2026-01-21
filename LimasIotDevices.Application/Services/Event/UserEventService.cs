@@ -22,19 +22,16 @@ public class UserEventService : IUserEventService
         {
             try
             {
-                if (response.HasStarted)
-                {
-                    await response.WriteAsync($"{message.ConvertToJson()}{Environment.NewLine}");
-                    await response.Body.FlushAsync();
-                }
+                await response.WriteAsync($"{message.ConvertToJson()}{Environment.NewLine}");
+                await response.Body.FlushAsync();
             }
             catch (ObjectDisposedException)
             {
                 // Response already disposed, client disconnected
             }
-            catch (Exception)
+            catch (InvalidOperationException)
             {
-                // Ignore other write errors (connection issues, etc)
+                // Response is no longer valid
             }
         };
 
