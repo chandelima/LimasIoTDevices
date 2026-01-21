@@ -92,7 +92,9 @@ internal class HomeAssistantWebsocketConnectionWorker : IHostedService
                         var newState = root["event"]?["data"]?["new_state"]?["state"]?.ToString();
 
                         if (entityId != null && newState != null)
+                        {
                             HandleStateChange(entityId, newState);
+                        }
                     }
                 }
             }
