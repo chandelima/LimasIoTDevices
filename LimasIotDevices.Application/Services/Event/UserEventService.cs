@@ -20,15 +20,33 @@ public class UserEventService : IUserEventService
 
         Func<object, Task> onMessage = async (object message) =>
         {
-            await response.WriteAsync($"{message.ConvertToJson()}{Environment.NewLine}");
-            await response.Body.FlushAsync();
+            try
+            {
+                if (response.HasStarted)
+                {
+                    await response.WriteAsync($"{message.ConvertToJson()}{Environment.NewLine}");
+                    await response.Body.FlushAsync();
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                // Response already disposed, client disconnected
+            }
+            catch (Exception)
+            {
+                // Ignore other write errors (connection issues, etc)
+            }
         };
 
         _ = onMessage(new EventResponse(
             EnumEventType.ConnectionEstablished,
             new { Message = "Connection established successfully!" }));
 
-        return _subject.Subscribe(async msg => await onMessage(msg));
+        var subscription = _subject.Subscribe(async msg => await onMessage(msg),
+            onError: _ => { /* Ignore errors */ },
+            onCompleted: () => { /* Stream completed */ });
+
+        return subscription;
     }
 
     public void Broadcast(EventResponse message)
