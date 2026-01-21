@@ -1,6 +1,7 @@
 ﻿using LimasIoTDevices.Facade.Dtos;
 using LimasIoTDevices.Facade.Enumerators;
 using LimasIoTDevices.Facade.Services;
+using LimasIoTDevices.Shared.Attributes;
 using LimasIoTDevices.Shared.Extensions;
 using Microsoft.AspNetCore.Http;
 using System.Reactive.Subjects;
@@ -28,7 +29,7 @@ public class UserEventService : IUserEventService
 
                 if (message is EventResponse ev)
                 {
-                    eventType = ev.Event.ToString().ToLowerInvariant();
+                    eventType = ev.Event.GetStringValue().ToLowerInvariant();
                 }
 
                 var ssePayload = "";
