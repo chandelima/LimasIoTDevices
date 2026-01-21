@@ -414,19 +414,6 @@ dotnet build
 docker build -t limasiot-devices-api -f LimasIotDevices.API/Dockerfile .
 ```
 
-### Running Tests
-
-```bash
-dotnet test
-```
-
-### Code Coverage
-
-```bash
-dotnet tool install -g dotnet-coverage
-dotnet-coverage collect -f cobertura -o coverage.cobertura.xml dotnet test
-```
-
 ## Deployment
 
 ### Production Considerations
