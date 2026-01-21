@@ -3,7 +3,7 @@ using FluentMigrator.Runner.VersionTableInfo;
 using LimasIotDevices.Domain.Interfaces.Gateways;
 using LimasIotDevices.Infrastructure.Data;
 using LimasIotDevices.Infrastructure.Data.Migrations;
-using LimasIotDevices.Infrastructure.External;
+using LimasIotDevices.Infrastructure.Gateways;
 using LimasIotDevices.Infrastructure.Handlers;
 using LimasIoTDevices.Shared.Data;
 using LimasIoTDevices.Shared.Services;

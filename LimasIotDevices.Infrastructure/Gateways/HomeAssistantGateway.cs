@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace LimasIotDevices.Infrastructure.External;
+namespace LimasIotDevices.Infrastructure.Gateways;
 
 internal class HomeAssistantGateway : IHomeAssistantGateway
 {
