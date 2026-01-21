@@ -22,7 +22,27 @@ public class UserEventService : IUserEventService
         {
             try
             {
-                await response.WriteAsync($"{message.ConvertToJson()}{Environment.NewLine}");
+                var json = message.ConvertToJson();
+
+                string? eventType = null;
+
+                if (message is EventResponse ev)
+                {
+                    eventType = ev.Event.ToString().ToLowerInvariant();
+                }
+
+                var ssePayload = "";
+
+                if (!string.IsNullOrEmpty(eventType))
+                {
+                    ssePayload += $"event: {eventType}\n";
+                }
+
+                var dataLines = json.Split('\n').Select(line => $"data: {line}");
+                ssePayload += string.Join("\n", dataLines);
+                ssePayload += "\n\n";
+
+                await response.WriteAsync(ssePayload);
                 await response.Body.FlushAsync();
             }
             catch (ObjectDisposedException)
@@ -34,6 +54,7 @@ public class UserEventService : IUserEventService
                 // Response is no longer valid
             }
         };
+
 
         _ = onMessage(new EventResponse(
             EnumEventType.ConnectionEstablished,
