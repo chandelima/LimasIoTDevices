@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: LimasIotDevices.API/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ConnectionStrings__LimasIotDevices: ${ConnectionStrings__LimasIotDevices}
+      HomeAssistantData__HostUrl: ${HomeAssistantData__HostUrl}
+      HomeAssistantData__Token: ${HomeAssistantData__Token}
