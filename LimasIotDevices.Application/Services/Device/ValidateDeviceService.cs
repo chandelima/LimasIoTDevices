@@ -103,12 +103,6 @@ internal class ValidateDeviceService
         }
         else
         {
-            var containsStateAttribute = request.Attributes.Any(x => x.Key == ApplicationConstants.MAIN_KEY_NAME);
-            if (!containsStateAttribute)
-            {
-                errorMessages.Add(string.Format(_localizationModel.Device.Validation.StateAttributeRequired, ApplicationConstants.MAIN_KEY_NAME));
-            }
-
             var duplicatedAttributeKeys = request.Attributes.Select(x => x.Key)!.GetDuplicated();
             if (duplicatedAttributeKeys.Any())
             {
