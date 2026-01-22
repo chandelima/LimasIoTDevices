@@ -21,16 +21,21 @@ internal class GetDevicesStateUseCase(
 
         if (databaseDevice is null) return null;
 
+        var haStates = await homeAssistantGateway.GetAllDevicesStatesWithDuration();
+        var entitiesStates = haStates
+            .Where(x => databaseDevice.Entities.Contains(x.EntityId))
+            .OrderBy(x => x.CurrentStateDuration.TotalSeconds)
+            .ToList();
+
         object state = "undefined";
         double currentStateDuration = 0;
 
-        foreach (var entity in databaseDevice.Entities)
+        foreach (var entityState in entitiesStates)
         {
-            var haData = await homeAssistantGateway.GetDeviceStateWithDuration(entity);
-            if (!string.IsNullOrWhiteSpace(haData?.State) && haData?.State != "undefined")
+            if (entityState.State != "undefined")
             {
-                state = haData!.Value.State;
-                currentStateDuration = haData.Value.CurrentStateDuration.TotalSeconds;
+                state = entityState.State;
+                currentStateDuration = entityState.CurrentStateDuration.TotalSeconds;
 
                 break;
             }
