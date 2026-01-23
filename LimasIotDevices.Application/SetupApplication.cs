@@ -16,6 +16,8 @@ public static class SetupApplication
 {
     public static void AddAplication(this IServiceCollection services)
     {
+        services.AddMemoryCache();
+
         services.AddHostedService<HomeAssistantWebsocketConnectionWorker>();
 
         // Services

@@ -28,19 +28,23 @@ internal class GetDevicesStatesUseCase(
 
             foreach (var attribute in device.Attributes)
             {
+                var entitiesStates = haGatewayDeviceStatus
+                    .Where(x => attribute.Entities.Contains(x.EntityId))
+                    .OrderBy(x => x.CurrentStateDuration.TotalSeconds)
+                    .ToList();
+
                 object state = "undefined";
                 double currentStateDuration = 0;
 
-                foreach (var entity in attribute.Entities)
+                foreach (var entityState in entitiesStates)
                 {
-                    var haDeviceStatus = haGatewayDeviceStatus.FirstOrDefault(x => x.EntityId == entity);
-                    if (haDeviceStatus.State != "undefined")
+                    if (entityState.State != "undefined")
                     {
-                        state = haDeviceStatus.State;
-                        currentStateDuration = haDeviceStatus.CurrentStateDuration.TotalSeconds;
+                        state = entityState.State;
+                        currentStateDuration = entityState.CurrentStateDuration.TotalSeconds;
 
                         break;
-                    }   
+                    }
                 }
 
                 var attributeResponse = new GetDeviceAttributeStateResponse(attribute.Key, state, currentStateDuration);

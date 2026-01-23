@@ -3,12 +3,14 @@ using LimasIoTDevices.Facade.Dtos;
 using LimasIoTDevices.Facade.Enumerators;
 using LimasIoTDevices.Facade.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LimasIotDevices.Application.Services.Device;
 
 internal class SendDeviceEventService(
     LimasIotDevicesDbContext _dbContext,
-    IUserEventService _userEventService)
+    IUserEventService _userEventService,
+    IMemoryCache _memoryCache)
 {
     public async Task Execute(string haEntity, string newStatus)
     {
@@ -23,7 +25,22 @@ internal class SendDeviceEventService(
             .FirstOrDefault(a => a.Entities.Any(e => e.ToLower() == haEntity.ToLower()))!
             .Key;
 
+        var hash = GetHash(databaseDevice.Key, eventAttributeKey, newStatus);
+        if (!_memoryCache.TryGetValue(hash, out _))
+        {
+            _memoryCache.Set(hash, true, TimeSpan.FromSeconds(3));
+        }
+        else
+        {
+            return;
+        }
+
         var eventResponse = new EventResponse(EnumEventType.DeviceStateChanged, new DeviceStateChangedResponse(databaseDevice.Key, eventAttributeKey, newStatus));
         _userEventService.Broadcast(eventResponse);
+    }
+
+    private string GetHash(string deviceKey, string deviceAttribute, string newStatus)
+    {
+        return $"{nameof(SendDeviceEventService)}:{deviceKey}_{deviceAttribute}_{newStatus}";
     }
 }
