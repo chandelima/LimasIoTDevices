@@ -35,6 +35,7 @@ public static class SetupApplication
         services.AddScoped<IGetDeviceByKeyUseCase, GetDeviceByKeyUseCase>();
         services.AddScoped<IGetDevicesStateUseCase, GetDevicesStateUseCase>();
         services.AddScoped<IGetDevicesStatesUseCase, GetDevicesStatesUseCase>();
+        services.AddScoped<IGetDevicesAvailableServicesUseCase, GetDevicesAvailableServicesUseCase>();
         services.AddScoped<ICreateDevicesUseCase, CreateDevicesUseCase>();
         services.AddScoped<IUpdateDevicesUseCase, UpdateDevicesUseCase>();
         services.AddScoped<IRemoveDevicesUseCase, RemoveDevicesUseCase>();

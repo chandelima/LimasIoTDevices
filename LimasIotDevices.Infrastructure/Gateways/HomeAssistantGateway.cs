@@ -165,4 +165,49 @@ internal class HomeAssistantGateway : IHomeAssistantGateway
             return false;
         }
     }
+
+    public async Task<Dictionary<string, HashSet<string>>> GetAvailableServices()
+    {
+        var response = await _httpClient.GetAsync("/api/services");
+
+        if (!response.IsSuccessStatusCode)
+            return new Dictionary<string, HashSet<string>>();
+
+        var json = await response.Content.ReadAsStringAsync();
+
+        var result = new Dictionary<string, HashSet<string>>();
+
+        using var doc = JsonDocument.Parse(json);
+        var root = doc.RootElement;
+
+        if (root.ValueKind != JsonValueKind.Array)
+            return new Dictionary<string, HashSet<string>>();
+
+        foreach (var domainElement in root.EnumerateArray())
+        {
+            if (!domainElement.TryGetProperty("domain", out var domainProp) ||
+                !domainElement.TryGetProperty("services", out var servicesProp))
+            {
+                continue;
+            }
+
+            var domain = domainProp.GetString();
+            if (string.IsNullOrEmpty(domain))
+                continue;
+
+            var services = new HashSet<string>();
+
+            if (servicesProp.ValueKind == JsonValueKind.Object)
+            {
+                foreach (var service in servicesProp.EnumerateObject())
+                {
+                    services.Add(service.Name);
+                }
+            }
+
+            result[domain] = services;
+        }
+
+        return result;
+    }
 }

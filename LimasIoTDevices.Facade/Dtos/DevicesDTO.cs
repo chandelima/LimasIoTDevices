@@ -4,6 +4,8 @@ public record CreateUpdateDeviceRequest(string? Key, string? Name, string? Descr
 public record GetDeviceResponse(string Key, string Name, string? Description, List<GetDeviceAttributeResponse> Attributes);
 public record GetDeviceStateResponse(string EntityKey, List<GetDeviceAttributeStateResponse> Attributes);
 public record GetDeviceAttributeStateResponse(string AttributeKey, object State, double CurrentStateDuration);
+public record GetDeviceAvailableServicesResponse(string DeviceKey, List<GetDeviceAttributeAvailableServicesResponse> Attributes);
+public record GetDeviceAttributeAvailableServicesResponse(string AttributeKey, List<string> AvailableServices);
 
 public record CreateUpdateDeviceAttributeRequest(string? Key, string? Name, string? Description, string[]? Entities);
 public record GetDeviceAttributeResponse(string Key, string Name, string? Description, string[] Entities);

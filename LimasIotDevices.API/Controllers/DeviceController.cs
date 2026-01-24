@@ -29,6 +29,14 @@ public class DeviceController : ControllerBase
         return this.GetResponse(result, useCase);
     }
 
+    [HttpGet("available-services")]
+    public async Task<ActionResult<DefaultControllerResponse<List<GetDeviceAvailableServicesResponse>>>> GetAvailableServices(
+        [FromServices] IGetDevicesAvailableServicesUseCase useCase)
+    {
+        var result = await useCase.Execute();
+        return this.GetResponse(result, useCase);
+    }
+
     [HttpGet("search")]
     public async Task<ActionResult<DefaultControllerResponse<List<GetDeviceResponse>>>> Search(
     [FromQuery] string? searchTerm,
