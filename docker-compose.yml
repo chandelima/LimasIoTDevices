@@ -6,8 +6,12 @@ services:
       context: .
       dockerfile: LimasIotDevices.API/Dockerfile
     ports:
-      - "8080:8080"
+      - "${HOST_PORT:-8080}:8080"
     environment:
-      ConnectionStrings__LimasIotDevices: ${ConnectionStrings__LimasIotDevices}
-      HomeAssistantData__HostUrl: ${HomeAssistantData__HostUrl}
-      HomeAssistantData__Token: ${HomeAssistantData__Token}
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
+      HOME_ASSISTANT_HOST_URL: ${HOME_ASSISTANT_HOST_URL}
+      HOME_ASSISTANT_TOKEN: ${HOME_ASSISTANT_TOKEN}
+      DEVICE_EVENT_DEBOUNCE_MILLISECONDS: ${DEVICE_EVENT_DEBOUNCE_MILLISECONDS:-3000}
+
+
+

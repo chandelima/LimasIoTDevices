@@ -291,6 +291,10 @@ node_modules/
 # Visual Studio 6 workspace options file
 *.opt
 
+# Environment variables (contains sensitive data)
+.env
+
+
 # Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
 *.vbw
 

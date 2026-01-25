@@ -73,135 +73,57 @@ docker build -t limasiot-devices-api -f LimasIotDevices.API/Dockerfile .
 docker run -d \
   --name limasiot-api \
   -p 8080:8080 \
-  -p 8081:8081 \
-  -e ConnectionStrings__LimasIotDevices="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
-  -e HomeAssistantData__HostUrl="http://your-homeassistant-instance:8123" \
-  -e HomeAssistantData__Token="your-long-lived-access-token" \
+  -e CONNECTION_STRING_LIMAS_IOT_DEVICES="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
+  -e HOME_ASSISTANT_HOST_URL="http://your-homeassistant-instance:8123" \
+  -e HOME_ASSISTANT_TOKEN="your-long-lived-access-token" \
+  -e DEVICE_EVENT_DEBOUNCE_MILLISECONDS=3000 \
   limasiot-devices-api
 ```
 
 #### Using Docker Compose
 
-Create a `docker-compose.yml` file in the root directory:
+> **Note**: The PostgreSQL database should be created and managed separately by the developer. You can use a dedicated PostgreSQL container, a cloud-hosted database, or a local installation.
+
+The `docker-compose.yml` file uses environment variables that you pass at runtime:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   api:
     build:
       context: .
       dockerfile: LimasIotDevices.API/Dockerfile
-    container_name: limasiot-api
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "${HOST_PORT:-8080}:8080"
     environment:
-      - ConnectionStrings__LimasIotDevices=Host=postgres;Database=limasiot;Username=limasiot;Password=your_secure_password
-      - HomeAssistantData__HostUrl=http://homeassistant:8123
-      - HomeAssistantData__Token=your-long-lived-access-token
-      - ASPNETCORE_ENVIRONMENT=Production
-    depends_on:
-      - postgres
-    networks:
-      - limasiot-network
-    restart: unless-stopped
-
-  postgres:
-    image: postgres:17-alpine
-    container_name: limasiot-postgres
-    environment:
-      - POSTGRES_DB=limasiot
-      - POSTGRES_USER=limasiot
-      - POSTGRES_PASSWORD=your_secure_password
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - limasiot-network
-    restart: unless-stopped
-
-volumes:
-  postgres-data:
-    driver: local
-
-networks:
-  limasiot-network:
-    driver: bridge
+      CONNECTION_STRING_LIMAS_IOT_DEVICES: ${CONNECTION_STRING_LIMAS_IOT_DEVICES}
+      HOME_ASSISTANT_HOST_URL: ${HOME_ASSISTANT_HOST_URL}
+      HOME_ASSISTANT_TOKEN: ${HOME_ASSISTANT_TOKEN}
+      DEVICE_EVENT_DEBOUNCE_MILLISECONDS: ${DEVICE_EVENT_DEBOUNCE_MILLISECONDS:-3000}
 ```
 
-Run with Docker Compose:
+Run with Docker Compose by passing environment variables directly:
 
 ```bash
-# Start all services
+# Start the API service with environment variables
+HOST_PORT=8080 \
+CONNECTION_STRING_LIMAS_IOT_DEVICES="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
+HOME_ASSISTANT_HOST_URL="http://your-homeassistant-instance:8123" \
+HOME_ASSISTANT_TOKEN="your-long-lived-access-token" \
+DEVICE_EVENT_DEBOUNCE_MILLISECONDS=3000 \
 docker-compose up -d
 
 # View logs
 docker-compose logs -f api
 
-# Stop all services
+# Stop the service
 docker-compose down
-
-# Stop and remove volumes
-docker-compose down -v
 ```
 
 The API will be available at:
-- HTTP: `http://localhost:8080`
-- HTTPS: `http://localhost:8081`
+- HTTP: `http://localhost:8080` (or the port defined in `HOST_PORT`)
 - Swagger UI: `http://localhost:8080/swagger`
-
-### Option 2: Running Locally
-
-#### 1. Clone the Repository
-
-```bash
-git clone https://github.com/chandelima/LimasIoTDevices.git
-cd LimasIoTDevices
-```
-
-#### 2. Configure Application Settings
-
-Update `appsettings.json` or use User Secrets:
-
-```json
-{
-  "ConnectionStrings": {
-    "LimasIotDevices": "Host=localhost;Database=limasiot;Username=your_user;Password=your_password"
-  },
-  "HomeAssistantData": {
-    "HostUrl": "http://your-homeassistant-instance:8123",
-    "Token": "your-long-lived-access-token"
-  }
-}
-```
-
-#### Using User Secrets (Recommended for Development)
-
-```bash
-cd LimasIoTDevices.API
-dotnet user-secrets set "ConnectionStrings:LimasIotDevices" "Host=localhost;Database=limasiot;Username=your_user;Password=your_password"
-dotnet user-secrets set "HomeAssistantData:HostUrl" "http://your-homeassistant-instance:8123"
-dotnet user-secrets set "HomeAssistantData:Token" "your-long-lived-access-token"
-```
-
-#### 3. Setup Database
-
-Ensure PostgreSQL is running and create the database. Migrations will be applied automatically.
-
-
-#### 4. Run the Application
-
-```bash
-cd LimasIoTDevices.API
-dotnet run
-```
-
-The API will be available at:
-- HTTP: `http://localhost:5000`
-- HTTPS: `https://localhost:5001`
-- Swagger UI: `https://localhost:5001/swagger`
 
 ## Docker Configuration
 
@@ -218,13 +140,13 @@ The project includes a multi-stage Dockerfile optimized for production:
 
 When running in Docker, configure the following environment variables:
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `ConnectionStrings__LimasIotDevices` | PostgreSQL connection string | `Host=postgres;Database=limasiot;Username=user;Password=pass` |
-| `HomeAssistantData__HostUrl` | Home Assistant URL | `http://homeassistant:8123` |
-| `HomeAssistantData__Token` | Home Assistant access token | `your-long-lived-access-token` |
-| `ASPNETCORE_ENVIRONMENT` | Environment name | `Production`, `Development` |
-| `ASPNETCORE_URLS` | URLs to bind | `http://+:8080;http://+:8081` |
+| Variable | Description | Default | Example |
+|----------|-------------|---------|----------|
+| `CONNECTION_STRING_LIMAS_IOT_DEVICES` | PostgreSQL connection string | (required) | `Host=postgres;Database=limasiot;Username=user;Password=pass` |
+| `HOME_ASSISTANT_HOST_URL` | Home Assistant URL | (required) | `http://homeassistant:8123` |
+| `HOME_ASSISTANT_TOKEN` | Home Assistant access token | (required) | `your-long-lived-access-token` |
+| `DEVICE_EVENT_DEBOUNCE_MILLISECONDS` | Debounce time for device events | `3000` | `3000` |
+| `HOST_PORT` | Host port to expose the API | `8080` | `8080` |
 
 ### Docker Networking
 
@@ -235,12 +157,9 @@ services:
   api:
     # ... other configuration ...
     networks:
-      - limasiot-network
       - homeassistant-network  # If Home Assistant is in a different network
     
 networks:
-  limasiot-network:
-    driver: bridge
   homeassistant-network:
     external: true  # Connect to existing Home Assistant network
 ```
@@ -418,14 +337,9 @@ docker build -t limasiot-devices-api -f LimasIotDevices.API/Dockerfile .
 
 ### Production Considerations
 
-1. **Use Docker Secrets or Environment Files**: Never commit sensitive data
-   
-   ```bash
-   # Create .env file (add to .gitignore)
-   echo "POSTGRES_PASSWORD=secure_password" > .env
-   echo "HA_TOKEN=your_token" >> .env
-   
-   # Reference in docker-compose.yml
-   env_file:
-     - .env
-   ```
+1. **Never commit sensitive data**: Pass environment variables through your deployment platform (GitHub Actions, Azure DevOps, Kubernetes secrets, etc.)
+
+2. **Use secure connection strings**: Ensure your PostgreSQL database uses SSL/TLS in production
+
+3. **Protect your Home Assistant token**: Use your platform's secret management system
+

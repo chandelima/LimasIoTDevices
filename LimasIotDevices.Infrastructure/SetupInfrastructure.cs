@@ -20,6 +20,7 @@ public static class SetupInfrastructure
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        MapEnvironmentVariables();
         SetupDatabase(services, configuration);
         InjectDependencies(services);
     }
@@ -27,6 +28,33 @@ public static class SetupInfrastructure
     public static void UseInfrastructureSettings(this IApplicationBuilder app, IConfiguration configuration)
     {
         ApplyMigrations(app, configuration);
+    }
+
+    private static void MapEnvironmentVariables()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+        if (!string.IsNullOrWhiteSpace(connectionString))
+        {
+            Environment.SetEnvironmentVariable("ConnectionStrings__LimasIotDevices", connectionString);
+        }
+
+        var hostUrl = Environment.GetEnvironmentVariable("HOME_ASSISTANT_HOST_URL");
+        if (!string.IsNullOrWhiteSpace(hostUrl))
+        {
+            Environment.SetEnvironmentVariable("HomeAssistantData__HostUrl", hostUrl);
+        }
+
+        var token = Environment.GetEnvironmentVariable("HOME_ASSISTANT_TOKEN");
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            Environment.SetEnvironmentVariable("HomeAssistantData__Token", token);
+        }
+
+        var debounce = Environment.GetEnvironmentVariable("DEVICE_EVENT_DEBOUNCE_MILLISECONDS");
+        if (!string.IsNullOrWhiteSpace(debounce))
+        {
+            Environment.SetEnvironmentVariable("DeviceEventDebounceMilliseconds", debounce);
+        }
     }
 
     private static void InjectDependencies(IServiceCollection services)
