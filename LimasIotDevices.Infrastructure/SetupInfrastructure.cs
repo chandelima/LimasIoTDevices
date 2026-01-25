@@ -1,4 +1,5 @@
-﻿using FluentMigrator.Runner;
+﻿using DotNetEnv;
+using FluentMigrator.Runner;
 using FluentMigrator.Runner.VersionTableInfo;
 using LimasIotDevices.Domain.Interfaces.Gateways;
 using LimasIotDevices.Infrastructure.Data;
@@ -12,27 +13,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
-using System.Net;
 
 
 namespace LimasIotDevices.Infrastructure;
 
 public static class SetupInfrastructure
 {
-    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static void SetupEnvironmentVariables()
     {
-        SetupEnvironmentVariables();
-        SetupDatabase(services, configuration);
-        InjectDependencies(services);
-    }
+        Env.Load(".env");
 
-    public static void UseInfrastructureSettings(this IApplicationBuilder app, IConfiguration configuration)
-    {
-        ApplyMigrations(app, configuration);
-    }
-
-    private static void SetupEnvironmentVariables()
-    {
         var setupResults = new HashSet<bool>
         {
             SetupEnvironmentVariable("DB_CONNECTION_STRING", "ConnectionStrings__LimasIotDevices", true),
@@ -45,6 +35,17 @@ public static class SetupInfrastructure
         {
             Environment.Exit(1);
         }
+    }
+
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    {
+        SetupDatabase(services, configuration);
+        InjectDependencies(services);
+    }
+
+    public static void UseInfrastructureSettings(this IApplicationBuilder app, IConfiguration configuration)
+    {
+        ApplyMigrations(app, configuration);
     }
 
     private static bool SetupEnvironmentVariable(string env, string appSettingsKey, bool required = false)

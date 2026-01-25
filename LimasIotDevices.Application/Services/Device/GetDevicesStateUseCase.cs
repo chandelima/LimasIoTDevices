@@ -3,9 +3,10 @@ using LimasIotDevices.Application.Constants;
 using LimasIotDevices.Domain.Interfaces.Gateways;
 using LimasIotDevices.Infrastructure.Data;
 using LimasIoTDevices.Facade.Dtos;
+using LimasIoTDevices.Facade.UseCases.Devices;
 using Microsoft.EntityFrameworkCore;
 
-namespace LimasIoTDevices.Facade.UseCases.Devices;
+namespace LimasIotDevices.Application.Services.Device;
 
 internal class GetDevicesStateUseCase(
     LimasIotDevicesDbContext dbContext,

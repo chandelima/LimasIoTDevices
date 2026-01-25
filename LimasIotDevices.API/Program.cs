@@ -3,6 +3,7 @@ using LimasIotDevices.Infrastructure;
 using LimasIoTDevices.API;
 using LimasIoTDevices.Shared;
 
+SetupInfrastructure.SetupEnvironmentVariables();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddShared();
