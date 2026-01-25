@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
+using System.Net;
 
 
 namespace LimasIotDevices.Infrastructure;
@@ -20,7 +21,7 @@ public static class SetupInfrastructure
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        MapEnvironmentVariables();
+        SetupEnvironmentVariables();
         SetupDatabase(services, configuration);
         InjectDependencies(services);
     }
@@ -30,31 +31,34 @@ public static class SetupInfrastructure
         ApplyMigrations(app, configuration);
     }
 
-    private static void MapEnvironmentVariables()
+    private static void SetupEnvironmentVariables()
     {
-        var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
-        if (!string.IsNullOrWhiteSpace(connectionString))
+        var setupResults = new HashSet<bool>
         {
-            Environment.SetEnvironmentVariable("ConnectionStrings__LimasIotDevices", connectionString);
-        }
+            SetupEnvironmentVariable("DB_CONNECTION_STRING", "ConnectionStrings__LimasIotDevices", true),
+            SetupEnvironmentVariable("HOME_ASSISTANT_HOST_URL", "HomeAssistantData__HostUrl", true),
+            SetupEnvironmentVariable("HOME_ASSISTANT_TOKEN", "HomeAssistantData__Token", true),
+            SetupEnvironmentVariable("DEVICE_EVENT_DEBOUNCE_MILLISECONDS", "DeviceEventDebounceMilliseconds")
+        };
 
-        var hostUrl = Environment.GetEnvironmentVariable("HOME_ASSISTANT_HOST_URL");
-        if (!string.IsNullOrWhiteSpace(hostUrl))
+        if (setupResults.Contains(false))
         {
-            Environment.SetEnvironmentVariable("HomeAssistantData__HostUrl", hostUrl);
+            Environment.Exit(1);
         }
+    }
 
-        var token = Environment.GetEnvironmentVariable("HOME_ASSISTANT_TOKEN");
-        if (!string.IsNullOrWhiteSpace(token))
-        {
-            Environment.SetEnvironmentVariable("HomeAssistantData__Token", token);
-        }
+    private static bool SetupEnvironmentVariable(string env, string appSettingsKey, bool required = false)
+    {
+        var envValue = Environment.GetEnvironmentVariable(env);
 
-        var debounce = Environment.GetEnvironmentVariable("DEVICE_EVENT_DEBOUNCE_MILLISECONDS");
-        if (!string.IsNullOrWhiteSpace(debounce))
+        if (string.IsNullOrWhiteSpace(envValue))
         {
-            Environment.SetEnvironmentVariable("DeviceEventDebounceMilliseconds", debounce);
+            Console.WriteLine($"[ERROR] \"{env}\" must be defined.");
+            return false;
         }
+        
+        Environment.SetEnvironmentVariable(appSettingsKey, envValue);
+        return true;
     }
 
     private static void InjectDependencies(IServiceCollection services)

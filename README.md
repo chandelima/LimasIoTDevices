@@ -73,10 +73,10 @@ docker build -t limasiot-devices-api -f LimasIotDevices.API/Dockerfile .
 docker run -d \
   --name limasiot-api \
   -p 8080:8080 \
-  -e CONNECTION_STRING_LIMAS_IOT_DEVICES="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
+  -e DB_CONNECTION_STRING="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
   -e HOME_ASSISTANT_HOST_URL="http://your-homeassistant-instance:8123" \
   -e HOME_ASSISTANT_TOKEN="your-long-lived-access-token" \
-  -e DEVICE_EVENT_DEBOUNCE_MILLISECONDS=3000 \
+  -e DEVICE_EVENT_DEBOUNCE_MILLISECONDS=1500 \
   limasiot-devices-api
 ```
 
@@ -97,10 +97,10 @@ services:
     ports:
       - "${HOST_PORT:-8080}:8080"
     environment:
-      CONNECTION_STRING_LIMAS_IOT_DEVICES: ${CONNECTION_STRING_LIMAS_IOT_DEVICES}
+      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
       HOME_ASSISTANT_HOST_URL: ${HOME_ASSISTANT_HOST_URL}
       HOME_ASSISTANT_TOKEN: ${HOME_ASSISTANT_TOKEN}
-      DEVICE_EVENT_DEBOUNCE_MILLISECONDS: ${DEVICE_EVENT_DEBOUNCE_MILLISECONDS:-3000}
+      DEVICE_EVENT_DEBOUNCE_MILLISECONDS: ${DEVICE_EVENT_DEBOUNCE_MILLISECONDS:-1500}
 ```
 
 Run with Docker Compose by passing environment variables directly:
@@ -108,10 +108,10 @@ Run with Docker Compose by passing environment variables directly:
 ```bash
 # Start the API service with environment variables
 HOST_PORT=8080 \
-CONNECTION_STRING_LIMAS_IOT_DEVICES="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
+DB_CONNECTION_STRING="Host=your-postgres-host;Database=limasiot;Username=your_user;Password=your_password" \
 HOME_ASSISTANT_HOST_URL="http://your-homeassistant-instance:8123" \
 HOME_ASSISTANT_TOKEN="your-long-lived-access-token" \
-DEVICE_EVENT_DEBOUNCE_MILLISECONDS=3000 \
+DEVICE_EVENT_DEBOUNCE_MILLISECONDS=1500 \
 docker-compose up -d
 
 # View logs
@@ -142,10 +142,10 @@ When running in Docker, configure the following environment variables:
 
 | Variable | Description | Default | Example |
 |----------|-------------|---------|----------|
-| `CONNECTION_STRING_LIMAS_IOT_DEVICES` | PostgreSQL connection string | (required) | `Host=postgres;Database=limasiot;Username=user;Password=pass` |
+| `DB_CONNECTION_STRING` | PostgreSQL connection string | (required) | `Host=postgres;Database=limasiot;Username=user;Password=pass` |
 | `HOME_ASSISTANT_HOST_URL` | Home Assistant URL | (required) | `http://homeassistant:8123` |
 | `HOME_ASSISTANT_TOKEN` | Home Assistant access token | (required) | `your-long-lived-access-token` |
-| `DEVICE_EVENT_DEBOUNCE_MILLISECONDS` | Debounce time for device events | `3000` | `3000` |
+| `DEVICE_EVENT_DEBOUNCE_MILLISECONDS` | Debounce time for device events | `1500` | `1500` |
 | `HOST_PORT` | Host port to expose the API | `8080` | `8080` |
 
 ### Docker Networking
