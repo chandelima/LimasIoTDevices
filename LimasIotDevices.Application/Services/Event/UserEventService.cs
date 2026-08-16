@@ -1,6 +1,6 @@
-﻿using LimasIoTDevices.Facade.Dtos;
-using LimasIoTDevices.Facade.Enumerators;
-using LimasIoTDevices.Facade.Services;
+﻿using LimasIoTDevices.Contracts.Dtos;
+using LimasIoTDevices.Contracts.Enumerators;
+using LimasIoTDevices.Contracts.Services;
 using LimasIoTDevices.Shared.Attributes;
 using LimasIoTDevices.Shared.Extensions;
 using Microsoft.AspNetCore.Http;

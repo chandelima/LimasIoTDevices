@@ -1,7 +1,7 @@
-﻿using LimasIoTDevices.Facade.Dtos;
+﻿using LimasIoTDevices.Contracts.Dtos;
 using Microsoft.AspNetCore.Http;
 
-namespace LimasIoTDevices.Facade.Services;
+namespace LimasIoTDevices.Contracts.Services;
 
 public interface IUserEventService
 {

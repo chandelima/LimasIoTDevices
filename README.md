@@ -34,7 +34,7 @@ LimasIoTDevices/
 ├── LimasIotDevices.Application/        # Business logic and use cases
 ├── LimasIotDevices.Domain/             # Domain models and interfaces
 ├── LimasIotDevices.Infrastructure/     # Data access and external services
-├── LimasIoTDevices.Facade/             # DTOs and public interfaces
+├── LimasIoTDevices.Contracts/             # DTOs and public interfaces
 └── LimasIoTDevices.Shared/             # Shared utilities and cross-cutting concerns
 ```
 
@@ -307,7 +307,7 @@ Execute Home Assistant services on device entities:
 - External service integrations
 - Data persistence
 
-### LimasIoTDevices.Facade
+### LimasIoTDevices.Contracts
 - Public DTOs (Data Transfer Objects)
 - Use case interfaces
 - Service contracts

@@ -3,7 +3,7 @@ using LimasIotDevices.Application.Services.HomeAssistant;
 using LimasIotDevices.Domain.Interfaces.Gateways;
 using LimasIotDevices.Domain.Models;
 using LimasIotDevices.Infrastructure.Data;
-using LimasIoTDevices.Facade.Dtos;
+using LimasIoTDevices.Contracts.Dtos;
 using LimasIoTDevices.Shared.Exceptions;
 using LimasIoTDevices.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;

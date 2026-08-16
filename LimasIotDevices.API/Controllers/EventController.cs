@@ -1,4 +1,4 @@
-﻿using LimasIoTDevices.Facade.Services;
+﻿using LimasIoTDevices.Contracts.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LimasIoTDevices.API.Controllers;

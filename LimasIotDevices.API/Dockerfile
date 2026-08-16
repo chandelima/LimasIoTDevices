@@ -9,7 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["LimasIotDevices.API/LimasIoTDevices.API.csproj", "LimasIotDevices.API/"]
 COPY ["LimasIotDevices.Application/LimasIotDevices.Application.csproj", "LimasIotDevices.Application/"]
-COPY ["LimasIoTDevices.Facade/LimasIoTDevices.Facade.csproj", "LimasIoTDevices.Facade/"]
+COPY ["LimasIoTDevices.Contracts/LimasIoTDevices.Contracts.csproj", "LimasIoTDevices.Contracts/"]
 COPY ["LimasIoTDevices.Shared/LimasIoTDevices.Shared.csproj", "LimasIoTDevices.Shared/"]
 COPY ["LimasIotDevices.Infrastructure/LimasIotDevices.Infrastructure.csproj", "LimasIotDevices.Infrastructure/"]
 COPY ["LimasIotDevices.Domain/LimasIotDevices.Domain.csproj", "LimasIotDevices.Domain/"]

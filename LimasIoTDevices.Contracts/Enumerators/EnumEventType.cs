@@ -1,6 +1,6 @@
 ﻿using LimasIoTDevices.Shared.Attributes;
 
-namespace LimasIoTDevices.Facade.Enumerators;
+namespace LimasIoTDevices.Contracts.Enumerators;
 
 public enum EnumEventType
 {

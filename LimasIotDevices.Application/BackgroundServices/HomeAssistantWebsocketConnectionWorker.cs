@@ -1,5 +1,5 @@
 ﻿using LimasIotDevices.Application.Services.Device;
-using LimasIoTDevices.Facade.Services;
+using LimasIoTDevices.Contracts.Services;
 using LimasIoTDevices.Shared.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

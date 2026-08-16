@@ -1,8 +1,8 @@
 ﻿using LimasIotDevices.Application.Base.UseCases;
 using LimasIotDevices.Application.Services.Device;
 using LimasIotDevices.Infrastructure.Data;
-using LimasIoTDevices.Facade.Dtos;
-using LimasIoTDevices.Facade.UseCases.Devices;
+using LimasIoTDevices.Contracts.Dtos;
+using LimasIoTDevices.Contracts.UseCases.Devices;
 using LimasIoTDevices.Shared.Data;
 
 namespace LimasIotDevices.Application.UseCases.Devices;

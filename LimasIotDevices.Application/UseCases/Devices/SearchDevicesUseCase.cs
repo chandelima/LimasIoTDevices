@@ -8,9 +8,9 @@ namespace LimasIotDevices.Application.UseCases.Devices;
 
 internal class SearchDevicesUseCase(
     LimasIotDevicesDbContext _dbContext,
-    ConvertDeviceService _convertDeviceService) : UseCaseBase, LimasIoTDevices.Facade.UseCases.Devices.ISearchDevicesUseCase
+    ConvertDeviceService _convertDeviceService) : UseCaseBase, LimasIoTDevices.Contracts.UseCases.Devices.ISearchDevicesUseCase
 {
-    public async Task<List<LimasIoTDevices.Facade.Dtos.GetDeviceResponse>> Execute(string? searchTerm)
+    public async Task<List<LimasIoTDevices.Contracts.Dtos.GetDeviceResponse>> Execute(string? searchTerm)
     {
         var lowerSearchterm = searchTerm?.Trim().ToLower();
 

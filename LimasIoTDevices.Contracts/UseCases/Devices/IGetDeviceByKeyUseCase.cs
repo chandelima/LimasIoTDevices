@@ -1,6 +1,6 @@
-﻿using LimasIoTDevices.Facade.Dtos;
+﻿using LimasIoTDevices.Contracts.Dtos;
 
-namespace LimasIoTDevices.Facade.UseCases.Devices;
+namespace LimasIoTDevices.Contracts.UseCases.Devices;
 
 public interface IGetDeviceByKeyUseCase : IUseCaseBase
 {

@@ -1,7 +1,7 @@
 ﻿using LimasIotDevices.Application.Constants;
 using LimasIotDevices.Domain.Interfaces.Gateways;
 using LimasIotDevices.Infrastructure.Data;
-using LimasIoTDevices.Facade.UseCases.DeviceAttributes;
+using LimasIoTDevices.Contracts.UseCases.DeviceAttributes;
 using Microsoft.EntityFrameworkCore;
 
 namespace LimasIotDevices.Application.UseCases.DeviceAttributes;

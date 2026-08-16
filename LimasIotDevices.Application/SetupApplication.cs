@@ -5,9 +5,9 @@ using LimasIotDevices.Application.Services.HomeAssistant;
 using LimasIotDevices.Application.Services.Translation;
 using LimasIotDevices.Application.UseCases.DeviceAttributes;
 using LimasIotDevices.Application.UseCases.Devices;
-using LimasIoTDevices.Facade.Services;
-using LimasIoTDevices.Facade.UseCases.DeviceAttributes;
-using LimasIoTDevices.Facade.UseCases.Devices;
+using LimasIoTDevices.Contracts.Services;
+using LimasIoTDevices.Contracts.UseCases.DeviceAttributes;
+using LimasIoTDevices.Contracts.UseCases.Devices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LimasIotDevices.Application;

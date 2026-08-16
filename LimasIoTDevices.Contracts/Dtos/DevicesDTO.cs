@@ -1,4 +1,4 @@
-﻿namespace LimasIoTDevices.Facade.Dtos;
+﻿namespace LimasIoTDevices.Contracts.Dtos;
 
 public record CreateUpdateDeviceRequest(string? Key, string? Name, string? Description, List<CreateUpdateDeviceAttributeRequest>? Attributes);
 public record GetDeviceResponse(string Key, string Name, string? Description, List<GetDeviceAttributeResponse> Attributes);

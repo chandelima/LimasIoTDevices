@@ -1,6 +1,6 @@
-﻿using LimasIoTDevices.Facade.Enumerators;
+﻿using LimasIoTDevices.Contracts.Enumerators;
 
-namespace LimasIoTDevices.Facade.Dtos;
+namespace LimasIoTDevices.Contracts.Dtos;
 
 public record EventResponse(EnumEventType Event, object Data);
 

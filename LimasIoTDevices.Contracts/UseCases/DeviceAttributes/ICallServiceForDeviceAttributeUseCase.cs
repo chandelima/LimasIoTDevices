@@ -1,4 +1,4 @@
-namespace LimasIoTDevices.Facade.UseCases.DeviceAttributes;
+namespace LimasIoTDevices.Contracts.UseCases.DeviceAttributes;
 
 public interface ICallServiceForDeviceAttributeUseCase
 {

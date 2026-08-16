@@ -1,7 +1,7 @@
-﻿using LimasIoTDevices.Facade.Dtos;
+﻿using LimasIoTDevices.Contracts.Dtos;
 using LimasIoTDevices.Shared.Interfaces;
 
-namespace LimasIoTDevices.Facade.UseCases.Devices;
+namespace LimasIoTDevices.Contracts.UseCases.Devices;
 
 public interface ICreateDevicesUseCase : IHasMessage
 {

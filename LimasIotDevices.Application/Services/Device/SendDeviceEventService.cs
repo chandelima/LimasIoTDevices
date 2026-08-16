@@ -1,7 +1,7 @@
 ﻿using LimasIotDevices.Infrastructure.Data;
-using LimasIoTDevices.Facade.Dtos;
-using LimasIoTDevices.Facade.Enumerators;
-using LimasIoTDevices.Facade.Services;
+using LimasIoTDevices.Contracts.Dtos;
+using LimasIoTDevices.Contracts.Enumerators;
+using LimasIoTDevices.Contracts.Services;
 using LimasIoTDevices.Shared.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;

@@ -1,6 +1,6 @@
-using LimasIoTDevices.Facade.Dtos;
-using LimasIoTDevices.Facade.UseCases.DeviceAttributes;
-using LimasIoTDevices.Facade.UseCases.Devices;
+using LimasIoTDevices.Contracts.Dtos;
+using LimasIoTDevices.Contracts.UseCases.DeviceAttributes;
+using LimasIoTDevices.Contracts.UseCases.Devices;
 using LimasIoTDevices.Shared.DTOs;
 using LimasIoTDevices.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;

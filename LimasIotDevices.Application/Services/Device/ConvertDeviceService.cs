@@ -1,5 +1,5 @@
 ﻿using LimasIotDevices.Domain.Entities;
-using LimasIoTDevices.Facade.Dtos;
+using LimasIoTDevices.Contracts.Dtos;
 
 namespace LimasIotDevices.Application.Services.Device;
 

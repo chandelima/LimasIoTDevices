@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LimasIoTDevices.Facade\LimasIoTDevices.Facade.csproj" />
+    <ProjectReference Include="..\LimasIoTDevices.Contracts\LimasIoTDevices.Contracts.csproj" />
     <ProjectReference Include="..\LimasIotDevices.Infrastructure\LimasIotDevices.Infrastructure.csproj" />
     <ProjectReference Include="..\LimasIoTDevices.Shared\LimasIoTDevices.Shared.csproj" />
   </ItemGroup>
